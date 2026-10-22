@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { MATERIALS, BOM, DIM_KEYS, deriveDims } from "./bom.js";
+import { MATERIALS, BOM, DIM_KEYS, CUT_MARGIN_MM, cutLength, deriveDims } from "./bom.js";
 
 const DIMS_STORAGE_KEY = "engome-dims-v1";
 const CHECKLIST_STORAGE_KEY = "engome-checklist-v1";
@@ -105,7 +105,7 @@ function renderCalculator() {
   // Parts table
   let rows = "";
   BOM.forEach((item) => {
-    const lenMm = item.length(dims);
+    const lenMm = cutLength(item, dims);
     rows += `<tr>
       <td>${item.label}</td>
       <td class="num">${item.qty}</td>
@@ -115,7 +115,7 @@ function renderCalculator() {
   });
   partsTableWrap.innerHTML = `
     <table>
-      <thead><tr><th>Peça</th><th class="num">Qtd.</th><th class="num">Comp. unitário</th><th class="num">Total</th></tr></thead>
+      <thead><tr><th>Peça</th><th class="num">Qtd.</th><th class="num">Comp. de corte (+5 cm)</th><th class="num">Total</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
 
@@ -127,7 +127,7 @@ function renderCalculator() {
     const lengths = [];
     let total = 0;
     items.forEach((item) => {
-      const lenMm = item.length(dims);
+      const lenMm = cutLength(item, dims);
       for (let i = 0; i < item.qty; i++) lengths.push(lenMm);
       total += lenMm * item.qty;
     });
@@ -135,9 +135,9 @@ function renderCalculator() {
     matsHtml += `
       <h3 class="material-group-title">${matInfo.label}</h3>
       <table>
-        <thead><tr><th>Peça</th><th class="num">Qtd.</th><th class="num">Comp. unitário</th></tr></thead>
+        <thead><tr><th>Peça</th><th class="num">Qtd.</th><th class="num">Comp. de corte (+5 cm)</th></tr></thead>
         <tbody>
-          ${items.map((item) => `<tr><td>${item.label}</td><td class="num">${item.qty}</td><td class="num">${formatLength(item.length(dims))}</td></tr>`).join("")}
+          ${items.map((item) => `<tr><td>${item.label}</td><td class="num">${item.qty}</td><td class="num">${formatLength(cutLength(item, dims))}</td></tr>`).join("")}
           <tr class="total-row"><td>Total de material</td><td class="num">${lengths.length} peça(s)</td><td class="num">${formatLength(total)}</td></tr>
           <tr><td colspan="3">≈ <strong>${barsNeeded}</strong> barra(s)/vergalhão(ões) de ${formatLength(stockLength)} necessária(s)</td></tr>
         </tbody>
@@ -251,8 +251,8 @@ function updateChecklistHints(dims) {
   CHECKLIST_GROUPS.forEach((group) => {
     const el = checklistGroupsWrap.querySelector(`[data-hint-for="${group.id}"]`);
     if (!el) return;
-    const lenMm = group.length(dims);
-    el.textContent = `comprimento de corte: ${formatLength(lenMm)} cada`;
+    const lenMm = group.length(dims) + CUT_MARGIN_MM;
+    el.textContent = `comprimento de corte: ${formatLength(lenMm)} cada (com margem de ${CUT_MARGIN_MM / 10} cm)`;
   });
 }
 

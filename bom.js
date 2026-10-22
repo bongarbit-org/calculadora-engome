@@ -41,6 +41,14 @@ export const BOM = [
     length: () => 75, formula: "fixo: 75 mm", partKey: "esticador" },
 ];
 
+// Margem somada ao comprimento de cada peça cortada das barras de metal (folga de corte/acabamento).
+export const CUT_MARGIN_MM = 50;
+
+// Comprimento de corte de uma linha da BOM: comprimento da peça + margem.
+export function cutLength(item, dims) {
+  return item.length(dims) + CUT_MARGIN_MM;
+}
+
 // Medidas pedidas ao usuário. As demais (Dmf, Dmd, Ai) são estimadas por deriveDims().
 export const DIM_KEYS = ["Dc", "Db"];
 
