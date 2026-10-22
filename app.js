@@ -1,6 +1,269 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { MATERIALS, BOM, DIM_KEYS } from "./bom.js";
+
+const DIMS_STORAGE_KEY = "engome-dims-v1";
+const CHECKLIST_STORAGE_KEY = "engome-checklist-v1";
+
+function loadDims() {
+  try {
+    const raw = localStorage.getItem(DIMS_STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+  return null;
+}
+function saveDims(dims) {
+  localStorage.setItem(DIMS_STORAGE_KEY, JSON.stringify(dims));
+}
+
+function fmt(n) {
+  if (!isFinite(n)) return "—";
+  return n.toLocaleString("pt-BR", { maximumFractionDigits: 1, minimumFractionDigits: 0 });
+}
+
+/* Lengths above 1 m are shown in meters (2 decimals); below that, in mm. */
+function formatLength(mm) {
+  if (!isFinite(mm)) return "—";
+  if (Math.abs(mm) >= 1000) {
+    const meters = mm / 1000;
+    return `${meters.toLocaleString("pt-BR", { maximumFractionDigits: 2, minimumFractionDigits: 0 })} m`;
+  }
+  return `${fmt(mm)} mm`;
+}
+
+/* First-fit-decreasing bin packing: how many stock bars are needed to cut a list of lengths. */
+function binPack(lengths, stockLength) {
+  const sorted = [...lengths].sort((a, b) => b - a);
+  const bins = []; // remaining space per bin
+  for (const len of sorted) {
+    if (len > stockLength) {
+      bins.push(0); // doesn't fit at all, counted as its own (oversized) bar
+      continue;
+    }
+    let placed = false;
+    for (let i = 0; i < bins.length; i++) {
+      if (bins[i] >= len) {
+        bins[i] -= len;
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) bins.push(stockLength - len);
+  }
+  return bins.length;
+}
+
+/* =========================================================================
+ * Tabs
+ * ========================================================================= */
+document.querySelectorAll(".tab-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(`tab-${btn.dataset.tab}`).classList.add("active");
+  });
+});
+
+/* =========================================================================
+ * Calculator
+ * ========================================================================= */
+const dimInputs = {};
+DIM_KEYS.forEach((k) => { dimInputs[k] = document.getElementById(`dim-${k}`); });
+const stockLengthInput = document.getElementById("stock-length");
+const partsTableWrap = document.getElementById("parts-table-wrap");
+const materialsTableWrap = document.getElementById("materials-table-wrap");
+let currentUnit = "mm";
+
+function getUnitFactorToMm() {
+  return currentUnit === "cm" ? 10 : 1;
+}
+
+function readDimsInMm() {
+  const factor = getUnitFactorToMm();
+  const dims = {};
+  let allFilled = true;
+  DIM_KEYS.forEach((k) => {
+    const raw = parseFloat(dimInputs[k].value);
+    if (isNaN(raw)) allFilled = false;
+    dims[k] = isNaN(raw) ? 0 : raw * factor;
+  });
+  return { dims, allFilled };
+}
+
+function renderCalculator() {
+  const { dims, allFilled } = readDimsInMm();
+  const stockLength = parseFloat(stockLengthInput.value) || 6000;
+
+  if (!allFilled) {
+    partsTableWrap.innerHTML = '<p class="empty-hint">Preencha todas as dimensões acima para calcular os cortes.</p>';
+    materialsTableWrap.innerHTML = "";
+    return;
+  }
+
+  // Parts table
+  let rows = "";
+  BOM.forEach((item) => {
+    const lenMm = item.length(dims);
+    rows += `<tr>
+      <td>${item.label}</td>
+      <td class="num">${item.qty}</td>
+      <td class="num">${formatLength(lenMm)}</td>
+      <td class="num">${formatLength(lenMm * item.qty)}</td>
+    </tr>`;
+  });
+  partsTableWrap.innerHTML = `
+    <table>
+      <thead><tr><th>Peça</th><th class="num">Qtd.</th><th class="num">Comp. unitário</th><th class="num">Total</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+
+  // Materials totals
+  let matsHtml = "";
+  Object.entries(MATERIALS).forEach(([matKey, matInfo]) => {
+    const items = BOM.filter((i) => i.material === matKey);
+    if (!items.length) return;
+    const lengths = [];
+    let total = 0;
+    items.forEach((item) => {
+      const lenMm = item.length(dims);
+      for (let i = 0; i < item.qty; i++) lengths.push(lenMm);
+      total += lenMm * item.qty;
+    });
+    const barsNeeded = binPack(lengths, stockLength);
+    matsHtml += `
+      <h3 class="material-group-title">${matInfo.label}</h3>
+      <table>
+        <thead><tr><th>Peça</th><th class="num">Qtd.</th><th class="num">Comp. unitário</th></tr></thead>
+        <tbody>
+          ${items.map((item) => `<tr><td>${item.label}</td><td class="num">${item.qty}</td><td class="num">${formatLength(item.length(dims))}</td></tr>`).join("")}
+          <tr class="total-row"><td>Total de material</td><td class="num">${lengths.length} peça(s)</td><td class="num">${formatLength(total)}</td></tr>
+          <tr><td colspan="3">≈ <strong>${barsNeeded}</strong> barra(s)/vergalhão(ões) de ${formatLength(stockLength)} necessária(s)</td></tr>
+        </tbody>
+      </table>`;
+  });
+  materialsTableWrap.innerHTML = matsHtml;
+
+  // persist
+  saveDims({ unit: currentUnit, values: DIM_KEYS.reduce((acc, k) => { acc[k] = dimInputs[k].value; return acc; }, {}), stockLength });
+
+  updateChecklistHints(dims);
+}
+
+DIM_KEYS.forEach((k) => dimInputs[k].addEventListener("input", renderCalculator));
+stockLengthInput.addEventListener("input", renderCalculator);
+document.querySelectorAll('input[name="unit"]').forEach((radio) => {
+  radio.addEventListener("change", (e) => {
+    currentUnit = e.target.value;
+    renderCalculator();
+  });
+});
+
+// restore persisted dims
+(function restoreDims() {
+  const saved = loadDims();
+  if (!saved) return;
+  currentUnit = saved.unit || "mm";
+  document.querySelector(`input[name="unit"][value="${currentUnit}"]`).checked = true;
+  DIM_KEYS.forEach((k) => {
+    if (saved.values && saved.values[k] !== undefined) dimInputs[k].value = saved.values[k];
+  });
+  if (saved.stockLength) stockLengthInput.value = saved.stockLength;
+  renderCalculator();
+})();
+
+/* =========================================================================
+ * Checklist
+ * ========================================================================= */
+// Expand BOM into individually-trackable pieces.
+const CHECKLIST_GROUPS = BOM.map((item) => ({
+  id: item.id,
+  label: item.label,
+  material: item.material,
+  qty: item.qty,
+  length: item.length,
+}));
+
+function loadChecklistState() {
+  try {
+    const raw = localStorage.getItem(CHECKLIST_STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+  return {};
+}
+let checklistState = loadChecklistState();
+function saveChecklistState() {
+  localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(checklistState));
+}
+
+const checklistGroupsWrap = document.getElementById("checklist-groups");
+const progressFill = document.getElementById("progress-fill");
+const progressText = document.getElementById("progress-text");
+
+function pieceKey(groupId, index) {
+  return `${groupId}__${index}`;
+}
+
+function renderChecklist() {
+  let html = "";
+  let totalPieces = 0;
+  let donePieces = 0;
+
+  CHECKLIST_GROUPS.forEach((group) => {
+    let itemsHtml = "";
+    for (let i = 0; i < group.qty; i++) {
+      const key = pieceKey(group.id, i);
+      const done = !!checklistState[key];
+      totalPieces++;
+      if (done) donePieces++;
+      const pieceLabel = group.qty > 1 ? `${i + 1}` : "feito";
+      itemsHtml += `<label class="checklist-item ${done ? "done" : ""}" data-key="${key}">
+        <input type="checkbox" ${done ? "checked" : ""} />
+        ${pieceLabel}
+      </label>`;
+    }
+    html += `<div class="checklist-group">
+      <h3>${group.label} <span class="count">${group.qty > 1 ? group.qty + " un." : ""}</span></h3>
+      <div class="length-hint" data-hint-for="${group.id}"></div>
+      <div class="checklist-items">${itemsHtml}</div>
+    </div>`;
+  });
+
+  checklistGroupsWrap.innerHTML = html;
+  checklistGroupsWrap.querySelectorAll(".checklist-item").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      const key = el.dataset.key;
+      checklistState[key] = !checklistState[key];
+      saveChecklistState();
+      renderChecklist();
+      const { dims, allFilled } = readDimsInMm();
+      if (allFilled) updateChecklistHints(dims);
+    });
+  });
+
+  progressFill.style.width = totalPieces ? `${(donePieces / totalPieces) * 100}%` : "0%";
+  progressText.textContent = `${donePieces} / ${totalPieces} peças concluídas`;
+}
+
+function updateChecklistHints(dims) {
+  CHECKLIST_GROUPS.forEach((group) => {
+    const el = checklistGroupsWrap.querySelector(`[data-hint-for="${group.id}"]`);
+    if (!el) return;
+    const lenMm = group.length(dims);
+    el.textContent = `comprimento de corte: ${formatLength(lenMm)} cada`;
+  });
+}
+
+document.getElementById("reset-checklist").addEventListener("click", () => {
+  if (!confirm("Reiniciar todo o progresso do checklist?")) return;
+  checklistState = {};
+  saveChecklistState();
+  renderChecklist();
+});
+
+renderChecklist();
 
 /* =========================================================================
  * 3D Viewer
