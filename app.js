@@ -295,7 +295,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 canvasWrap.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x11151a);
+scene.background = new THREE.Color(0xf0d6b8);
 
 const camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
 camera.position.set(1200, 900, 1400);
@@ -504,6 +504,6 @@ function animate() {
 resizeRenderer();
 loadModel().then(animate).catch((err) => {
   console.error("Falha ao carregar modelo 3D:", err);
-  canvasWrap.innerHTML = `<p style="padding:1rem;color:#c96b5c">Não foi possível carregar o modelo 3D (assets/engome.glb). Detalhe: ${err.message}</p>`;
+  canvasWrap.innerHTML = `<p class="viewer-error">Não foi possível carregar o modelo 3D (assets/engome.glb). Detalhe: ${err.message}</p>`;
 });
 new ResizeObserver(resizeRenderer).observe(canvasWrap);

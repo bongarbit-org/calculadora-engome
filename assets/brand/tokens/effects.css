@@ -1,0 +1,9 @@
+:root{
+/* Print identity: no soft shadows, no gradients, no blur. Depth = offset ink block. */
+--shadow-none:none;
+--shadow-carimbo:3px 3px 0 var(--preto-grafite);
+--shadow-carimbo-lg:5px 5px 0 var(--preto-grafite);
+--ease-print:cubic-bezier(.3,.7,.4,1); /* @kind other */
+--dur-fast:120ms; /* @kind other */
+--dur:200ms; /* @kind other */
+}

@@ -1,0 +1,47 @@
+:root{
+/* Brand palette — from BRIEFING.md (official) */
+--preto-grafite:#161512;
+--ocre-cabaca:#d4752d;
+--areia:#d3ad84;
+--marrom-terra:#6b3c23;
+--terracota-queimada:#b14826;
+--verde-baoba:#31671f;
+--azul-caixas-dagua:#376182;
+--amarelo-ocre:#d0962d;
+--papel:#ead6bf;
+/* Sampled from cartaz-referencia.png (print as produced) */
+--papel-cartaz:#f0d6b8;
+--terracota-tinta:#963720;   /* headline red-brown on poster */
+--areia-tinta:#be7f5e;       /* "ATIVIDADES EM OLINDA & RECIFE" */
+--preto-tinta:#020202;       /* frame + wordmark */
+/* EPI-only (mascot safety gear — never use as brand colour) */
+--epi-verde-limao:#b6e51d;
+--epi-laranja:#f07a1a;
+/* Tints for UI (derived) */
+--papel-escuro:#dcc3a3;
+--papel-claro:#f6e9d8;
+--grafite-70:#4a4640;
+--grafite-50:#7a7166;
+
+/* Semantic */
+--bg-page:var(--papel-cartaz);
+--bg-surface:var(--papel);
+--bg-surface-raised:var(--papel-claro);
+--bg-inverse:var(--preto-grafite);
+--fg-1:var(--preto-grafite);
+--fg-2:var(--grafite-70);
+--fg-3:var(--grafite-50);
+--fg-inverse:var(--papel-cartaz);
+--fg-accent:var(--terracota-tinta);
+--fg-muted-accent:var(--areia-tinta);
+--line:var(--preto-grafite);
+--line-soft:var(--papel-escuro);
+--action:var(--preto-grafite);
+--action-fg:var(--papel-cartaz);
+--action-accent:var(--terracota-queimada);
+--status-ok:var(--verde-baoba);
+--status-info:var(--azul-caixas-dagua);
+--status-warn:var(--amarelo-ocre);
+--status-danger:var(--terracota-queimada);
+--focus:var(--ocre-cabaca);
+}

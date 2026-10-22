@@ -1,26 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="90 0 550 775" font-family="-apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#5c9ec9"></path>
+      <path d="M0,0 L10,5 L0,10 z" fill="#376182"></path>
     </marker>
   </defs>
 
   <style>
-    .outline { fill: #caa06a; fill-opacity: 0.18; stroke: #8a6240; stroke-width: 2.5; }
-    .ring { fill: none; stroke: #6f7a86; stroke-width: 4; }
-    .ring-inner { fill: none; stroke: #6f7a86; stroke-width: 3; stroke-dasharray: 5 4; }
-    .cap { fill: #caa06a; fill-opacity: 0.28; stroke: #8a6240; stroke-width: 1.5; }
-    .dim-line { stroke: #5c9ec9; stroke-width: 1.6; marker-start: url(#arrow); marker-end: url(#arrow); fill: none; }
-    .ext-line { stroke: #9aa4b2; stroke-width: 1; stroke-dasharray: 2 3; }
-    .dim-label { fill: #e8ebef; font-size: 20px; font-weight: 700; }
-    .dim-sub { fill: #9aa4b2; font-size: 12px; }
-    .note { fill: #9aa4b2; font-size: 12px; }
-    .shape-label { fill: #9aa4b2; font-size: 12px; font-style: italic; }
-    text { paint-order: stroke; stroke: #171b21; stroke-width: 4px; stroke-linejoin: round; }
+    .outline { fill: #d4752d; fill-opacity: 0.18; stroke: #6b3c23; stroke-width: 2.5; }
+    .ring { fill: none; stroke: #161512; stroke-width: 4; }
+    .ring-inner { fill: none; stroke: #161512; stroke-width: 3; stroke-dasharray: 5 4; }
+    .cap { fill: #d4752d; fill-opacity: 0.28; stroke: #6b3c23; stroke-width: 1.5; }
+    .dim-line { stroke: #376182; stroke-width: 1.6; marker-start: url(#arrow); marker-end: url(#arrow); fill: none; }
+    .ext-line { stroke: #4a4640; stroke-width: 1; stroke-dasharray: 2 3; }
+    .dim-label { fill: #161512; font-size: 20px; font-weight: 700; }
+    .dim-sub { fill: #4a4640; font-size: 12px; }
+    .note { fill: #4a4640; font-size: 12px; }
+    .shape-label { fill: #4a4640; font-size: 12px; font-style: italic; }
+    text { paint-order: stroke; stroke: #f6e9d8; stroke-width: 4px; stroke-linejoin: round; }
     .note, .shape-label { stroke: none; }
   </style>
 
-  <rect x="0" y="0" width="640" height="775" fill="#171b21"></rect>
+  <rect x="0" y="0" width="640" height="775" fill="#f6e9d8"></rect>
 
   <!-- Bottom cap ellipse -->
   <ellipse class="cap" cx="300" cy="620" rx="140" ry="15"></ellipse>

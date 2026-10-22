@@ -1,0 +1,21 @@
+:root{
+--fw-regular:400; /* @kind font */
+--fw-medium:500; /* @kind font */
+--fw-semibold:600; /* @kind font */
+--fw-bold:700; /* @kind font */
+
+--fs-12:12px;--fs-14:14px;--fs-16:16px;--fs-18:18px;--fs-20:20px;--fs-24:24px;--fs-32:32px;--fs-40:40px;--fs-56:56px;--fs-72:72px;--fs-96:96px;
+--lh-tight:0.95; /* @kind font */
+--lh-snug:1.15; /* @kind font */
+--lh-body:1.45; /* @kind font */
+
+--tracking-caps:0.02em;--tracking-kicker:0.04em;
+/* Semantic roles */
+--type-display:var(--fw-bold) var(--fs-72)/var(--lh-tight) var(--font-hand);
+--type-headline:var(--fw-bold) var(--fs-40)/var(--lh-tight) var(--font-hand);
+--type-lede:var(--fw-bold) var(--fs-20)/var(--lh-snug) var(--font-sans);
+--type-kicker:var(--fw-bold) var(--fs-14)/var(--lh-snug) var(--font-sans);
+--type-body:var(--fw-regular) var(--fs-16)/var(--lh-body) var(--font-sans);
+--type-small:var(--fw-medium) var(--fs-14)/var(--lh-body) var(--font-sans);
+--type-numeral:var(--fw-bold) var(--fs-32)/1 var(--font-condensed);
+}

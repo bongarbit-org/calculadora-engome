@@ -1,0 +1,7 @@
+:root{
+--sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:48px;--sp-8:64px;--sp-9:96px;
+--radius-0:0;--radius-stamp:6px;--radius-pill:999px;
+/* Poster frame (cartaz 837px wide): 7px outer rule · 4px paper gap · 5px inner rule */
+--frame-outer:7px;--frame-gap:4px;--frame-inner:5px;
+--rule-thin:2px;--rule:3px;--rule-thick:5px;
+}

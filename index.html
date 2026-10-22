@@ -4,7 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Calculadora de Engome</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥁</text></svg>" />
+<link rel="icon" type="image/png" href="assets/brand/assets/logo/simbolo.png" />
+<link rel="stylesheet" href="assets/brand/tokens/fonts.css" />
+<link rel="stylesheet" href="assets/brand/tokens/colors.css" />
+<link rel="stylesheet" href="assets/brand/tokens/typography.css" />
+<link rel="stylesheet" href="assets/brand/tokens/spacing.css" />
+<link rel="stylesheet" href="assets/brand/tokens/effects.css" />
+<link rel="stylesheet" href="assets/brand/tokens/base.css" />
 <link rel="stylesheet" href="style.css" />
 <script type="importmap">
 {
@@ -16,9 +22,13 @@
 </script>
 </head>
 <body>
-<header class="topbar">
+<header class="poster-head">
+  <p class="kicker">Oficina de Engome</p>
+  <img class="wordmark" src="assets/brand/assets/logo/wordmark.png" alt="Bongarbit — Escola de Luteria da Xambá" />
+  <img class="ornamento" src="assets/brand/assets/logo/ornamento.png" alt="" />
   <h1>Calculadora de Engome</h1>
-  <nav class="tabs">
+  <p class="lede">Informe as medidas do bojo e descubra quanto ferro comprar para fazer o seu Engome.</p>
+  <nav class="tabs" aria-label="Seções">
     <button class="tab-btn active" data-tab="viewer">Modelo 3D</button>
     <button class="tab-btn" data-tab="calc">Calculadora</button>
     <button class="tab-btn" data-tab="checklist">Checklist</button>
@@ -53,9 +63,9 @@
         <h2>Dimensões a serem medidas</h2>
         <p class="muted">Meça o bojo (casco de madeira) conforme o diagrama e preencha os valores abaixo.</p>
         <p class="muted">
-          <a href="ficha-medidas-e-calculo.pdf" target="_blank" rel="noopener">📄 Baixar ficha em PDF (para imprimir)</a>
+          <a href="ficha-medidas-e-calculo.pdf" target="_blank" rel="noopener">Baixar ficha em PDF (para imprimir)</a>
           &nbsp;·&nbsp;
-          <a href="ficha-medidas-e-calculo.docx">📝 Baixar em Word (.docx, editável)</a>
+          <a href="ficha-medidas-e-calculo.docx">Baixar em Word (.docx, editável)</a>
         </p>
 
         <div class="diagram-wrap">
@@ -126,6 +136,12 @@
     </div>
   </section>
 </main>
+
+<footer class="poster-foot">
+  <img class="ornamento" src="assets/brand/assets/logo/ornamento.png" alt="" />
+  <p class="kicker">Ministério da Cultura e Programa Rouanet Nordeste apresentam</p>
+  <p class="credits">Identidade visual: Adelson Boris e Philipe Camarão · BONGARBIT.ORG · @BONGARBIT</p>
+</footer>
 
 <script type="module" src="app.js"></script>
 </body>
