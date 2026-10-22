@@ -50,24 +50,24 @@ export function cutLength(item, dims) {
 }
 
 // Medidas pedidas ao usuário. As demais (Dmf, Dmd, Ai) são estimadas por deriveDims().
-export const DIM_KEYS = ["Dc", "Db"];
+export const DIM_KEYS = ["Dc", "Db", "H"];
 
 export const DIM_INFO = {
   Dc:  { label: "Diâmetro de cima" },
   Db:  { label: "Diâmetro de baixo" },
+  H:   { label: "Altura do bojo" },
 };
 
-// Premissas do bojo, tiradas do modelo 3D (Engome.obj): cone reto, parede de 15 mm, 600 mm de altura.
+// Premissas do bojo, tiradas do modelo 3D (Engome.obj): cone reto com parede de 15 mm.
 export const BOJO_ESPESSURA_MM = 15;
-export const BOJO_ALTURA_MM = 600;
 
-/* A partir de Dc e Db (mm), completa as medidas usadas nas fórmulas:
+/* A partir de Dc, Db e H (mm), completa as medidas usadas nas fórmulas:
  *   Dmf = (Dc + Db) / 2                 (diâmetro de fora na cintura, bojo cônico)
  *   Dmd = Dmf − 2 × espessura da parede (diâmetro de dentro na cintura)
- *   Ai  = √(altura² + ((Dc − Db) / 2)²) (comprimento da lateral inclinada) */
-export function deriveDims({ Dc, Db }) {
+ *   Ai  = √(H² + ((Dc − Db) / 2)²) (comprimento da lateral inclinada) */
+export function deriveDims({ Dc, Db, H }) {
   const Dmf = (Dc + Db) / 2;
   const Dmd = Dmf - 2 * BOJO_ESPESSURA_MM;
-  const Ai = Math.hypot(BOJO_ALTURA_MM, (Dc - Db) / 2);
-  return { Dc, Db, Dmf, Dmd, Ai };
+  const Ai = Math.hypot(H, (Dc - Db) / 2);
+  return { Dc, Db, H, Dmf, Dmd, Ai };
 }
