@@ -54,7 +54,7 @@
   <line class="ext-line" x1="440" y1="620" x2="530" y2="620"></line>
   <line class="dim-line" x1="520" y1="100" x2="520" y2="620"></line>
   <text class="dim-label" x="552" y="364" text-anchor="start">H</text>
-  <text class="dim-sub" x="552" y="380" text-anchor="start">altura do bojo</text>
+  <text class="dim-sub" x="552" y="380" text-anchor="start">altura da Macaíba</text>
 
   <text class="note" x="365" y="750" text-anchor="middle">
     <tspan x="365" dy="0">Diagrama esquemático (fora de escala) — os diâmetros</tspan>

@@ -269,18 +269,18 @@ renderChecklist();
  * 3D Viewer
  * ========================================================================= */
 const GROUP_LABELS = {
-  bojo: "Bojo (casco de madeira)",
-  arquilha_externa: "Arquilha externa de sustentação do bojo",
-  arquilha_interna: "Arquilha interna de sustentação do bojo",
+  bojo: "Macaíba (casco de madeira)",
+  arquilha_externa: "Arquilha externa de sustentação da Macaíba",
+  arquilha_interna: "Arquilha interna de sustentação da Macaíba",
   aro_cima: "Aro de cima",
-  suporte: "Suportes para o bojo no aro de baixo",
+  suporte: "Suportes para a Macaíba no aro de baixo",
   aro_baixo: "Aro de baixo",
   orelha: "Orelhas",
   esticador: "Esticadores",
   arquilha_couro: "Arquilha do couro",
   base_circular: "Base circular",
   pe: "Pés",
-  bojo_aro_topo: "Aba superior do bojo (madeira)",
+  bojo_aro_topo: "Aba superior da Macaíba (madeira)",
   couro: "Couro (pele do tambor)",
 };
 const GROUP_QTY = { bojo: 1, arquilha_externa: 1, arquilha_interna: 1, aro_cima: 1, suporte: 3, aro_baixo: 1, orelha: 15, esticador: 6, arquilha_couro: 1, base_circular: 1, pe: 3, bojo_aro_topo: 1, couro: 1 };
