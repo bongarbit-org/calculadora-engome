@@ -1,9 +1,21 @@
 {
-  "bojo": {
-    "key": "bojo",
-    "label": "Bojo (casco de madeira)",
-    "group": "wood",
-    "material": null
+  "aro_baixo": {
+    "key": "aro_baixo",
+    "label": "Aro de baixo",
+    "group": "chata",
+    "material": "chata"
+  },
+  "aro_cima": {
+    "key": "aro_cima",
+    "label": "Aro de cima",
+    "group": "chata",
+    "material": "chata"
+  },
+  "arquilha_couro": {
+    "key": "arquilha_couro",
+    "label": "Arquilha do couro",
+    "group": "varao14",
+    "material": "varao14"
   },
   "arquilha_externa": {
     "key": "arquilha_externa",
@@ -17,35 +29,59 @@
     "group": "chata",
     "material": "chata"
   },
-  "aro_cima": {
-    "key": "aro_cima",
-    "label": "Aro de cima",
-    "group": "chata",
-    "material": "chata"
+  "base_circular": {
+    "key": "base_circular",
+    "label": "Base circular",
+    "group": "varao12",
+    "material": "varao12"
   },
-  "suporte_1": {
-    "key": "suporte_1",
-    "label": "Suporte do bojo (aro de baixo) 1/3",
-    "group": "chata",
-    "material": "chata"
+  "bojo": {
+    "key": "bojo",
+    "label": "Bojo (casco de madeira)",
+    "group": "wood",
+    "material": null
   },
-  "suporte_2": {
-    "key": "suporte_2",
-    "label": "Suporte do bojo (aro de baixo) 2/3",
-    "group": "chata",
-    "material": "chata"
+  "couro": {
+    "key": "couro",
+    "label": "Couro (pele do tambor)",
+    "group": "couro",
+    "material": null
   },
-  "suporte_3": {
-    "key": "suporte_3",
-    "label": "Suporte do bojo (aro de baixo) 3/3",
-    "group": "chata",
-    "material": "chata"
+  "esticador_1": {
+    "key": "esticador_1",
+    "label": "Esticador 1/6",
+    "group": "esticador",
+    "material": "esticador"
   },
-  "aro_baixo": {
-    "key": "aro_baixo",
-    "label": "Aro de baixo",
-    "group": "chata",
-    "material": "chata"
+  "esticador_2": {
+    "key": "esticador_2",
+    "label": "Esticador 2/6",
+    "group": "esticador",
+    "material": "esticador"
+  },
+  "esticador_3": {
+    "key": "esticador_3",
+    "label": "Esticador 3/6",
+    "group": "esticador",
+    "material": "esticador"
+  },
+  "esticador_4": {
+    "key": "esticador_4",
+    "label": "Esticador 4/6",
+    "group": "esticador",
+    "material": "esticador"
+  },
+  "esticador_5": {
+    "key": "esticador_5",
+    "label": "Esticador 5/6",
+    "group": "esticador",
+    "material": "esticador"
+  },
+  "esticador_6": {
+    "key": "esticador_6",
+    "label": "Esticador 6/6",
+    "group": "esticador",
+    "material": "esticador"
   },
   "orelha_1": {
     "key": "orelha_1",
@@ -137,54 +173,6 @@
     "group": "cantoneira",
     "material": "cantoneira"
   },
-  "esticador_1": {
-    "key": "esticador_1",
-    "label": "Esticador 1/6",
-    "group": "esticador",
-    "material": "esticador"
-  },
-  "esticador_2": {
-    "key": "esticador_2",
-    "label": "Esticador 2/6",
-    "group": "esticador",
-    "material": "esticador"
-  },
-  "esticador_3": {
-    "key": "esticador_3",
-    "label": "Esticador 3/6",
-    "group": "esticador",
-    "material": "esticador"
-  },
-  "esticador_4": {
-    "key": "esticador_4",
-    "label": "Esticador 4/6",
-    "group": "esticador",
-    "material": "esticador"
-  },
-  "esticador_5": {
-    "key": "esticador_5",
-    "label": "Esticador 5/6",
-    "group": "esticador",
-    "material": "esticador"
-  },
-  "esticador_6": {
-    "key": "esticador_6",
-    "label": "Esticador 6/6",
-    "group": "esticador",
-    "material": "esticador"
-  },
-  "arquilha_couro": {
-    "key": "arquilha_couro",
-    "label": "Arquilha do couro",
-    "group": "varao14",
-    "material": "varao14"
-  },
-  "base_circular": {
-    "key": "base_circular",
-    "label": "Base circular",
-    "group": "varao12",
-    "material": "varao12"
-  },
   "pe_1": {
     "key": "pe_1",
     "label": "Pé 1/3",
@@ -202,11 +190,5 @@
     "label": "Pé 3/3",
     "group": "pe",
     "material": "pe"
-  },
-  "bojo_aro_topo": {
-    "key": "bojo_aro_topo",
-    "label": "Aba superior do bojo (madeira)",
-    "group": "wood",
-    "material": null
   }
 }

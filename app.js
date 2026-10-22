@@ -281,8 +281,9 @@ const GROUP_LABELS = {
   base_circular: "Base circular",
   pe: "Pés",
   bojo_aro_topo: "Aba superior do bojo (madeira)",
+  couro: "Couro (pele do tambor)",
 };
-const GROUP_QTY = { bojo: 1, arquilha_externa: 1, arquilha_interna: 1, aro_cima: 1, suporte: 3, aro_baixo: 1, orelha: 15, esticador: 6, arquilha_couro: 1, base_circular: 1, pe: 3, bojo_aro_topo: 1 };
+const GROUP_QTY = { bojo: 1, arquilha_externa: 1, arquilha_interna: 1, aro_cima: 1, suporte: 3, aro_baixo: 1, orelha: 15, esticador: 6, arquilha_couro: 1, base_circular: 1, pe: 3, bojo_aro_topo: 1, couro: 1 };
 const WOOD_GROUPS = new Set(["bojo", "bojo_aro_topo"]);
 
 const canvasWrap = document.getElementById("viewer-canvas");
@@ -381,7 +382,7 @@ function selectGroup(group, opts = {}) {
 
 function buildPartsList(metadata) {
   // group order: follow first-seen order in metadata / BOM-ish priority
-  const order = ["bojo", "arquilha_externa", "arquilha_interna", "aro_cima", "aro_baixo", "suporte", "orelha", "esticador", "arquilha_couro", "base_circular", "pe", "bojo_aro_topo"];
+  const order = ["bojo", "arquilha_externa", "arquilha_interna", "aro_cima", "aro_baixo", "suporte", "orelha", "esticador", "arquilha_couro", "base_circular", "pe", "bojo_aro_topo", "couro"];
   const groupColor = {};
   Object.values(metadata).forEach((info) => {
     if (!(info.group in groupColor)) groupColor[info.group] = colorForGroup(info.group);
@@ -414,14 +415,14 @@ function buildPartsList(metadata) {
 function colorForGroup(group) {
   const colors = {
     wood: "#8a6240", chata: "#b0b4b8", cantoneira: "#6f7a86",
-    varao14: "#d7b25c", varao12: "#8fae6b", esticador: "#5c9ec9", pe: "#c96b5c",
+    varao14: "#d7b25c", varao12: "#8fae6b", esticador: "#5c9ec9", pe: "#c96b5c", couro: "#9e7349",
   };
   // map GROUP (semantic) to material-group used at export time
   const semanticToExportGroup = {
     bojo: "wood", bojo_aro_topo: "wood",
     arquilha_externa: "chata", arquilha_interna: "chata", aro_cima: "chata", aro_baixo: "chata", suporte: "chata",
     orelha: "cantoneira", arquilha_couro: "varao14", base_circular: "varao12",
-    esticador: "esticador", pe: "pe",
+    esticador: "esticador", pe: "pe", couro: "couro",
   };
   return colors[semanticToExportGroup[group]] || "#cccccc";
 }
