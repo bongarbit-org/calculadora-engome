@@ -284,6 +284,20 @@ const GROUP_LABELS = {
   couro: "Couro (pele do tambor)",
 };
 const GROUP_QTY = { bojo: 1, arquilha_externa: 1, arquilha_interna: 1, aro_cima: 1, suporte: 3, aro_baixo: 1, orelha: 15, esticador: 6, arquilha_couro: 1, base_circular: 1, pe: 3, bojo_aro_topo: 1, couro: 1 };
+// Uma cor por parte (no modelo 3D e na lista). O bojo mantém a textura de madeira.
+const PART_COLORS = {
+  bojo: "#8a6240",
+  arquilha_externa: "#b14826",
+  arquilha_interna: "#d4752d",
+  aro_cima: "#d0962d",
+  aro_baixo: "#31671f",
+  orelha: "#376182",
+  esticador: "#8c3b5e",
+  arquilha_couro: "#6e8f3a",
+  base_circular: "#2f8f8a",
+  pe: "#6b3c23",
+  couro: "#d9b27c",
+};
 const WOOD_GROUPS = new Set(["bojo", "bojo_aro_topo"]);
 
 const canvasWrap = document.getElementById("viewer-canvas");
@@ -383,18 +397,13 @@ function selectGroup(group, opts = {}) {
 function buildPartsList(metadata) {
   // group order: follow first-seen order in metadata / BOM-ish priority
   const order = ["bojo", "arquilha_externa", "arquilha_interna", "aro_cima", "aro_baixo", "suporte", "orelha", "esticador", "arquilha_couro", "base_circular", "pe", "bojo_aro_topo", "couro"];
-  const groupColor = {};
-  Object.values(metadata).forEach((info) => {
-    if (!(info.group in groupColor)) groupColor[info.group] = colorForGroup(info.group);
-  });
-
   let html = "";
   order.forEach((group) => {
     if (!meshesByGroup[group]) return;
     const label = GROUP_LABELS[group] || group;
     const qty = GROUP_QTY[group] || 1;
     html += `<li data-group="${group}">
-      <span class="swatch" style="background:${groupColor[group]}"></span>
+      <span class="swatch" style="background:${colorForGroup(group)}"></span>
       <span>${label}</span>
       <span class="qty">${qty > 1 ? qty + "x" : ""}</span>
     </li>`;
@@ -413,18 +422,7 @@ function buildPartsList(metadata) {
 }
 
 function colorForGroup(group) {
-  const colors = {
-    wood: "#8a6240", chata: "#b0b4b8", cantoneira: "#6f7a86",
-    varao14: "#d7b25c", varao12: "#8fae6b", esticador: "#5c9ec9", pe: "#c96b5c", couro: "#9e7349",
-  };
-  // map GROUP (semantic) to material-group used at export time
-  const semanticToExportGroup = {
-    bojo: "wood", bojo_aro_topo: "wood",
-    arquilha_externa: "chata", arquilha_interna: "chata", aro_cima: "chata", aro_baixo: "chata", suporte: "chata",
-    orelha: "cantoneira", arquilha_couro: "varao14", base_circular: "varao12",
-    esticador: "esticador", pe: "pe", couro: "couro",
-  };
-  return colors[semanticToExportGroup[group]] || "#cccccc";
+  return PART_COLORS[group] || "#cccccc";
 }
 
 async function loadModel() {
@@ -448,6 +446,12 @@ async function loadModel() {
     else semanticGroup = info.key;
 
     obj.userData.semanticGroup = semanticGroup;
+    if (PART_COLORS[semanticGroup] && semanticGroup !== "bojo") {
+      obj.material = obj.material.clone();
+      obj.material.color.set(PART_COLORS[semanticGroup]);
+      obj.material.metalness = Math.min(obj.material.metalness, 0.3);
+      obj.material.roughness = 0.5;
+    }
     if (!meshesByGroup[semanticGroup]) meshesByGroup[semanticGroup] = [];
     meshesByGroup[semanticGroup].push(obj);
   });
