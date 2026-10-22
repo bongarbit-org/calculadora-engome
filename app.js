@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { MATERIALS, BOM, DIM_KEYS } from "./bom.js";
+import { MATERIALS, BOM, DIM_KEYS, deriveDims } from "./bom.js";
 
 const DIMS_STORAGE_KEY = "engome-dims-v1";
 const CHECKLIST_STORAGE_KEY = "engome-checklist-v1";
@@ -89,7 +89,7 @@ function readDimsInMm() {
     if (isNaN(raw)) allFilled = false;
     dims[k] = isNaN(raw) ? 0 : raw * factor;
   });
-  return { dims, allFilled };
+  return { dims: deriveDims(dims), allFilled };
 }
 
 function renderCalculator() {

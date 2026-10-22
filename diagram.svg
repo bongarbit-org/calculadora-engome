@@ -25,20 +25,14 @@
   <!-- Bottom cap ellipse -->
   <ellipse class="cap" cx="300" cy="620" rx="140" ry="15"></ellipse>
 
-  <!-- Outer silhouette (Dc top -> Dmf waist -> Db bottom) -->
-  <path class="outline" d="M130,100 L150,380 L160,620 L440,620 L450,380 L470,100 Z"></path>
-
-  <!-- Waist ring (Dmf, outer) -->
-  <ellipse class="ring" cx="300" cy="380" rx="150" ry="13"></ellipse>
-  <!-- Inner ring (Dmd, dashed, sits inside the wood wall) -->
-  <ellipse class="ring-inner" cx="300" cy="380" rx="128" ry="11"></ellipse>
+  <!-- Outer silhouette (Dc top -> Db bottom) -->
+  <path class="outline" d="M130,100 L160,620 L440,620 L470,100 Z"></path>
 
   <!-- Top cap ellipse -->
   <ellipse class="cap" cx="300" cy="100" rx="170" ry="18"></ellipse>
 
   <!-- orientation labels -->
   <text class="shape-label" x="300" y="75" text-anchor="middle">topo (couro)</text>
-  <text class="shape-label" x="300" y="345" text-anchor="middle">cintura (junção interna/externa)</text>
   <text class="shape-label" x="300" y="655" text-anchor="middle">base</text>
 
   <!-- ===== Dc dimension (above) ===== -->
@@ -55,27 +49,8 @@
   <text class="dim-label" x="300" y="705" text-anchor="middle">Db</text>
   <text class="dim-sub" x="300" y="722" text-anchor="middle">diâmetro de baixo</text>
 
-  <!-- ===== Ai dimension (right, diagonal, follows the slanted surface) ===== -->
-  <line class="ext-line" x1="470" y1="100" x2="532" y2="100"></line>
-  <line class="ext-line" x1="440" y1="620" x2="502" y2="620"></line>
-  <polyline class="dim-line" points="532,100 512,380 502,620"></polyline>
-  <text class="dim-label" x="570" y="384" text-anchor="middle">Ai</text>
-  <text class="dim-sub" x="570" y="400" text-anchor="middle">lateral do bojo</text>
-
-  <!-- ===== Dmf dimension (waist, outer) ===== -->
-  <line class="ext-line" x1="450" y1="380" x2="560" y2="368"></line>
-  <line class="dim-line" x1="300" y1="368" x2="450" y2="368"></line>
-  <text class="dim-label" x="560" y="360" text-anchor="start">Dmf</text>
-  <text class="dim-sub" x="560" y="376" text-anchor="start">meio de fora</text>
-
-  <!-- ===== Dmd dimension (waist, inner) ===== -->
-  <line class="ext-line" x1="428" y1="380" x2="560" y2="416"></line>
-  <line class="dim-line" x1="300" y1="416" x2="428" y2="416" stroke-dasharray="1 0"></line>
-  <text class="dim-label" x="560" y="424" text-anchor="start">Dmd</text>
-  <text class="dim-sub" x="560" y="440" text-anchor="start">meio de dentro</text>
-
   <text class="note" x="365" y="750" text-anchor="middle">
-    <tspan x="365" dy="0">Diagrama esquemático (fora de escala) — todos os diâmetros</tspan>
+    <tspan x="365" dy="0">Diagrama esquemático (fora de escala) — os diâmetros</tspan>
     <tspan x="365" dy="16">são medidos na horizontal, de face a face.</tspan>
   </text>
 </svg>

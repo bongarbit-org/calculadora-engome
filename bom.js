@@ -41,12 +41,25 @@ export const BOM = [
     length: () => 75, formula: "fixo: 75 mm", partKey: "esticador" },
 ];
 
-export const DIM_KEYS = ["Dc", "Dmf", "Dmd", "Db", "Ai"];
+// Medidas pedidas ao usuário. As demais (Dmf, Dmd, Ai) são estimadas por deriveDims().
+export const DIM_KEYS = ["Dc", "Db"];
 
 export const DIM_INFO = {
   Dc:  { label: "Diâmetro de cima" },
-  Dmf: { label: "Diâmetro do meio de fora" },
-  Dmd: { label: "Diâmetro do meio de dentro" },
   Db:  { label: "Diâmetro de baixo" },
-  Ai:  { label: "Comprimento da lateral do bojo" },
 };
+
+// Premissas do bojo, tiradas do modelo 3D (Engome.obj): cone reto, parede de 15 mm, 600 mm de altura.
+export const BOJO_ESPESSURA_MM = 15;
+export const BOJO_ALTURA_MM = 600;
+
+/* A partir de Dc e Db (mm), completa as medidas usadas nas fórmulas:
+ *   Dmf = (Dc + Db) / 2                 (diâmetro de fora na cintura, bojo cônico)
+ *   Dmd = Dmf − 2 × espessura da parede (diâmetro de dentro na cintura)
+ *   Ai  = √(altura² + ((Dc − Db) / 2)²) (comprimento da lateral inclinada) */
+export function deriveDims({ Dc, Db }) {
+  const Dmf = (Dc + Db) / 2;
+  const Dmd = Dmf - 2 * BOJO_ESPESSURA_MM;
+  const Ai = Math.hypot(BOJO_ALTURA_MM, (Dc - Db) / 2);
+  return { Dc, Db, Dmf, Dmd, Ai };
+}
