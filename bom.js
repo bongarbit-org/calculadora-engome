@@ -25,7 +25,7 @@ export const BOM = [
     length: (d) => (d.Db + 4) * Math.PI, formula: "(Db + 4mm) × π", partKey: "aro_baixo" },
   { id: "suportes", label: "Suportes para o bojo no aro de baixo", material: "chata", qty: 3,
     length: (d) => ((d.Db + 4) * Math.PI) / 12, formula: "(Db + 4mm) × π ÷ 12", partKey: "suporte" },
-  { id: "orelhas", label: "Orelhas furadas", material: "cantoneira", qty: 15,
+  { id: "orelhas", label: "Orelhas", material: "cantoneira", qty: 15,
     length: () => 22.2, formula: "fixo: 7/8” (22,2 mm)", partKey: "orelha" },
   { id: "arquilha_couro", label: "Arquilha do couro", material: "varao14", qty: 1,
     length: (d) => (d.Dc + 8) * Math.PI, formula: "(Dc + 8mm) × π", partKey: "arquilha_couro" },

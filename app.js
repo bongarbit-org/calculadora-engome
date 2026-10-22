@@ -275,7 +275,7 @@ const GROUP_LABELS = {
   aro_cima: "Aro de cima",
   suporte: "Suportes para o bojo no aro de baixo",
   aro_baixo: "Aro de baixo",
-  orelha: "Orelhas furadas",
+  orelha: "Orelhas",
   esticador: "Esticadores",
   arquilha_couro: "Arquilha do couro",
   base_circular: "Base circular",
